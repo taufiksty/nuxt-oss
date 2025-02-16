@@ -1,0 +1,12 @@
+echo "const { Client } = require('pg');
+const client = new Client({
+    user: 'admin',
+    host: 'database', 
+    database: 'oss_rba_master',
+    password: 'admin_secret',
+    port: 5433
+});
+client.connect()
+    .then(() => console.log('Connected to PostgreSQL!'))
+    .catch(err => console.error('Connection error:', err))
+    .finally(() => client.end());" > test-db.js

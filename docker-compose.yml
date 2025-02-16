@@ -1,0 +1,27 @@
+services:
+  nuxt:
+    build: .
+    container_name: nuxt_oss
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+
+  database:
+    image: postgres:15
+    container_name: postgres_oss
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  pgdata: {}
