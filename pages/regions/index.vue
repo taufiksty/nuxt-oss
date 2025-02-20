@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useFetch } from "#app";
+import { useDebounce, useDebounceFn } from "@vueuse/core";
 
 const searchQuery = ref("");
 const page = ref(1);
@@ -33,10 +34,12 @@ const fetchRegions = async () => {
   loading.value = false;
 };
 
+const debouncedFetchRegions = useDebounceFn(fetchRegions, 500);
+
 watch(page, fetchRegions, { immediate: true });
 watch(searchQuery, () => {
   page.value = 1;
-  fetchRegions();
+  debouncedFetchRegions();
 });
 
 const columns = [

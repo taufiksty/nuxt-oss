@@ -1,4 +1,5 @@
 <script setup>
+import { useDebounceFn } from "@vueuse/core";
 import { ref, watch } from "vue";
 
 const searchProvince = ref("");
@@ -97,10 +98,15 @@ const fetchVillages = async () => {
   }
 };
 
-watch(searchProvince, fetchProvinces, { immediate: true });
-watch(searchCity, fetchCities);
-watch(searchDistrict, fetchDistricts);
-watch(searchVillage, fetchVillages);
+const debouncedFetchProvinces = useDebounceFn(fetchProvinces, 500);
+const debouncedFetchCities = useDebounceFn(fetchCities, 500);
+const debouncedFetchDistricts = useDebounceFn(fetchDistricts, 500);
+const debouncedFetchVillages = useDebounceFn(fetchVillages, 500);
+
+watch(searchProvince, debouncedFetchProvinces, { immediate: true });
+watch(searchCity, debouncedFetchCities);
+watch(searchDistrict, debouncedFetchDistricts);
+watch(searchVillage, debouncedFetchVillages);
 
 watch(selectedProvince, () => {
   if (selectedProvince.value.length) {
