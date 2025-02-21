@@ -5,6 +5,7 @@ Nuxt OSS adalah sebuah website yang menampilkan informasi tentang wilayah di Ind
 ## Teknologi yang Digunakan
 
 - **Nuxt.js** - Framework berbasis Vue.js untuk membangun aplikasi web
+- **NuxtUI** - Library UI untuk yang di desain untuk Nuxt.js
 - **PostgreSQL** - Database yang digunakan untuk menyimpan data wilayah
 - **Docker** - Containerization untuk mempermudah deployment dan pengelolaan lingkungan
 
@@ -13,24 +14,27 @@ Nuxt OSS adalah sebuah website yang menampilkan informasi tentang wilayah di Ind
 Ikuti langkah-langkah berikut untuk mengatur dan menjalankan proyek di lokal:
 
 ### 1. Clone Repository
+
 ```bash
 git clone https://github.com/taufiksty/nuxt-oss.git
 cd nuxt-oss
 ```
 
 ### 2. Jalankan dengan Docker
+
 Jika menggunakan Docker, jalankan perintah berikut:
+
 ```bash
 docker compose up --build -d
 ```
-Aplikasi akan berjalan di http://localhost:3000.
 
+Aplikasi akan berjalan di http://localhost:3000.
 
 ## 📜 Dokumentasi API
 
 Dokumentasi API tersedia menggunakan Swagger. Anda dapat mengaksesnya melalui:
 
-🔗 [Swagger Docs](http://localhost:3000/api/docs)
+🔗 [Swagger Docs](http://localhost:3000/docs)
 
 Pastikan server berjalan sebelum mengakses dokumentasi.
 

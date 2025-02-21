@@ -156,6 +156,13 @@ watch(selectedVillage, () => {
     fetchVillages();
   }
 });
+
+const handleExport = async (to, level, parentId) => {
+  window.open(
+    `/api/export/region?to=${to}&level=${level}&parentId=${parentId}`,
+    "_blank"
+  );
+};
 </script>
 
 <template>
@@ -165,13 +172,27 @@ watch(selectedVillage, () => {
     <div>
       <h2>Provinsi</h2>
       <div
-        class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
+        class="flex justify-between items-center px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
       >
         <UInput
           v-model="searchProvince"
           placeholder="Cari provinsi..."
           clearable
         />
+        <div class="flex gap-3" v-if="!selectedProvince.length">
+          <button
+            @click.prevent="handleExport('csv', 'provinsi')"
+            class="bg-green-300 p-2 rounded-md text-sm"
+          >
+            Export to CSV
+          </button>
+          <button
+            @click.prevent="handleExport('pdf', 'provinsi')"
+            class="bg-red-300 p-2 rounded-md text-sm"
+          >
+            Export to PDF
+          </button>
+        </div>
       </div>
       <UTable
         :rows="provinces"
@@ -188,13 +209,31 @@ watch(selectedVillage, () => {
     <div v-if="selectedProvince.length" class="mt-10">
       <h2>Kota/Kabupaten</h2>
       <div
-        class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
+        class="flex justify-between items-center px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
       >
         <UInput
           v-model="searchCity"
           placeholder="Cari kota/kabupaten..."
           clearable
         />
+        <div class="flex gap-3" v-if="!selectedCity.length">
+          <button
+            @click.prevent="
+              handleExport('csv', 'city', selectedProvince[0].region_id)
+            "
+            class="bg-green-300 p-2 rounded-md text-sm"
+          >
+            Export to CSV
+          </button>
+          <button
+            @click.prevent="
+              handleExport('pdf', 'city', selectedProvince[0].region_id)
+            "
+            class="bg-red-300 p-2 rounded-md text-sm"
+          >
+            Export to PDF
+          </button>
+        </div>
       </div>
       <UTable
         :rows="cities"
@@ -211,13 +250,31 @@ watch(selectedVillage, () => {
     <div v-if="selectedCity.length" class="mt-10">
       <h2>Kecamatan</h2>
       <div
-        class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
+        class="flex justify-between items-center px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
       >
         <UInput
           v-model="searchDistrict"
           placeholder="Cari kecamatan..."
           clearable
         />
+        <div class="flex gap-3" v-if="!selectedDistrict.length">
+          <button
+            @click.prevent="
+              handleExport('csv', 'kecamatan', selectedCity[0].region_id)
+            "
+            class="bg-green-300 p-2 rounded-md text-sm"
+          >
+            Export to CSV
+          </button>
+          <button
+            @click.prevent="
+              handleExport('pdf', 'kecamatan', selectedCity[0].region_id)
+            "
+            class="bg-red-300 p-2 rounded-md text-sm"
+          >
+            Export to PDF
+          </button>
+        </div>
       </div>
       <UTable
         :rows="districts"
@@ -234,13 +291,31 @@ watch(selectedVillage, () => {
     <div v-if="selectedDistrict.length" class="mt-10">
       <h2>Kelurahan/Desa</h2>
       <div
-        class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
+        class="flex justify-between items-center px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
       >
         <UInput
           v-model="searchVillage"
           placeholder="Cari kelurahan/desa..."
           clearable
         />
+        <div class="flex gap-3" v-if="!selectedVillage.length">
+          <button
+            @click.prevent="
+              handleExport('csv', 'kelurahan', selectedDistrict[0].region_id)
+            "
+            class="bg-green-300 p-2 rounded-md text-sm"
+          >
+            Export to CSV
+          </button>
+          <button
+            @click.prevent="
+              handleExport('pdf', 'kelurahan', selectedDistrict[0].region_id)
+            "
+            class="bg-red-300 p-2 rounded-md text-sm"
+          >
+            Export to PDF
+          </button>
+        </div>
       </div>
       <UTable
         :rows="villages"

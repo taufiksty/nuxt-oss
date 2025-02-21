@@ -17,6 +17,9 @@
     "pdfkit": "^0.16.0",
     "pdfkit-table": "^0.1.99",
     "pg": "^8.13.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-dist": "^5.19.0",
+    "swagger-ui-express": "^5.0.1",
     "vue": "latest",
     "vue-router": "latest",
     "yaml": "^2.7.0"
@@ -25,6 +28,9 @@
     "@types/k6": "^0.54.2",
     "@types/papaparse": "^5.3.15",
     "@types/pdfkit": "^0.13.9",
-    "@types/pg": "^8.11.11"
+    "@types/pg": "^8.11.11",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-dist": "^3.30.5",
+    "@types/swagger-ui-express": "^4.1.7"
   }
 }

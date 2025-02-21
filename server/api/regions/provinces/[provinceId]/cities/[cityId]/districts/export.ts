@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   const cityId = event.context.params?.cityId;
   const query = getQuery(event);
   const search = query.search ? `%${query.search}%` : "%";
-  const to = query.to || "pdf";
+  const to = query.to;
 
   const client = await pool.connect();
 

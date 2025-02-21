@@ -1,0 +1,323 @@
+openapi: 3.0.0
+info:
+  title: Nuxt OSS - API Wilayah Indonesia
+  description: API untuk mengambil daftar wilayah di Indonesia.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3001/api
+    description: Development server
+
+paths:
+  /regions:
+    get:
+      summary: Get the list of regions (including provinces, cities, districts, and villages)
+      description: Returns the list of regions with pagination and search.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination.
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Total data per page.
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: search
+          in: query
+          description: Search keyword based on regions.
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success retrieving data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        region_id:
+                          type: integer
+                          example: 1
+                        nama:
+                          type: string
+                          example: "Jakarta"
+                        level:
+                          type: string
+                          example: "Provinsi"
+                  pagination:
+                    type: object
+                    properties:
+                      totalRows:
+                        type: integer
+                        example: 100
+                      totalPages:
+                        type: integer
+                        example: 5
+                      currentPage:
+                        type: integer
+                        example: 1
+                      perPage:
+                        type: integer
+                        example: 20
+                  message:
+                    type: string
+                    example: "OK"
+        "500":
+          description: Failed retrieving data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /regions/provinces:
+    get:
+      summary: Get a list of active provinces
+      description: Returns a list of active provinces from the regions
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional search term to filter provinces by name.
+      responses:
+        "200":
+          description: Successfully retrieved provinces
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegionResponse"
+        "500":
+          description: Failed retrieve data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /regions/provinces/{provinceId}/cities:
+    get:
+      summary: Get a list of active cities by province id
+      description: Returns a list of cities from the regions where province id is provided.
+      parameters:
+        - name: provinceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the province whose cities are to be retrieved.
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional search term to filter cities by name.
+      responses:
+        "200":
+          description: Successfully retrieved cities
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegionResponse"
+        "500":
+          description: Failed to retrieve data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /regions/provinces/{provinceId}/cities/{cityId}/districts:
+    get:
+      summary: Get a list of active disctricts by province id and city id
+      description: Returns a list of districts from the regions where province id and city id is provided.
+      parameters:
+        - name: provinceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the province whose cities are to be retrieved.
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the city whose districts are to be retrieved.
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional search term to filter districts by name.
+      responses:
+        "200":
+          description: Successfully retrieved districts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegionResponse"
+        "500":
+          description: Failed to retrieve data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /regions/provinces/{provinceId}/cities/{cityId}/districts/{districtId}/villages:
+    get:
+      summary: Get a list of active villages by province id, city id, and district id
+      description: Returns a list of districts from the regions where province id, city id, and district id is provided.
+      parameters:
+        - name: provinceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the province whose cities are to be retrieved.
+        - name: cityId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the city whose districts are to be retrieved.
+        - name: districtId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the district whose villages are to be retrieved.
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional search term to filter villages by name.
+      responses:
+        "200":
+          description: Successfully retrieved districts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegionResponse"
+        "500":
+          description: Failed to retrieve data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /export/region:
+    get:
+      summary: Export region data (province, city, district, village)
+      description: Retrieves region data and exports it in CSV or PDF format.
+      parameters:
+        - name: search
+          in: query
+          description: Search term for filtering regions (case-insensitive).
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: Format to export (csv or pdf).
+          required: false
+          schema:
+            type: string
+            enum: [csv, pdf]
+            default: pdf
+        - name: level
+          in: query
+          description: Administrative level of the region.
+          required: false
+          schema:
+            type: string
+            enum: [provinsi, kota, kecamatan, kelurahan]
+            default: provinsi
+        - name: parentId
+          in: query
+          description: Parent ID for hierarchical filtering (required for non-provinsi levels).
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully exported data
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+              example: |
+                region_id,nama
+                101,Jakarta
+                102,Surabaya
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Invalid request (e.g., missing required parameters).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "You must include parentId"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to fetch data"
+                  details:
+                    type: string
+
+components:
+  schemas:
+    RegionResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Region"
+        message:
+          type: string
+          example: "OK"
+
+    Region:
+      type: object
+      properties:
+        region_id:
+          type: string
+          description: The ID of the region.
+        nama:
+          type: string
+          description: The name of the region.
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Failed to fetch data"
+        details:
+          type: string
+          example: "Database connection error"
