@@ -163,6 +163,10 @@ const handleExport = async (to, level, parentId) => {
     "_blank"
   );
 };
+
+const colorMode = useColorMode();
+
+console.log(colorMode.preference);
 </script>
 
 <template>
@@ -180,18 +184,20 @@ const handleExport = async (to, level, parentId) => {
           clearable
         />
         <div class="flex gap-3" v-if="!selectedProvince.length">
-          <button
+          <UButton
+            variant="solid"
+            color="primary"
             @click.prevent="handleExport('csv', 'provinsi')"
-            class="bg-green-300 p-2 rounded-md text-sm"
           >
             Export to CSV
-          </button>
-          <button
+          </UButton>
+          <UButton
+            variant="solid"
+            color="rose"
             @click.prevent="handleExport('pdf', 'provinsi')"
-            class="bg-red-300 p-2 rounded-md text-sm"
           >
             Export to PDF
-          </button>
+          </UButton>
         </div>
       </div>
       <UTable
@@ -217,22 +223,24 @@ const handleExport = async (to, level, parentId) => {
           clearable
         />
         <div class="flex gap-3" v-if="!selectedCity.length">
-          <button
+          <UButton
             @click.prevent="
               handleExport('csv', 'city', selectedProvince[0].region_id)
             "
-            class="bg-green-300 p-2 rounded-md text-sm"
+            variant="solid"
+            color="primary"
           >
             Export to CSV
-          </button>
-          <button
+          </UButton>
+          <UButton
             @click.prevent="
               handleExport('pdf', 'city', selectedProvince[0].region_id)
             "
-            class="bg-red-300 p-2 rounded-md text-sm"
+            variant="solid"
+            color="rose"
           >
             Export to PDF
-          </button>
+          </UButton>
         </div>
       </div>
       <UTable
@@ -258,22 +266,24 @@ const handleExport = async (to, level, parentId) => {
           clearable
         />
         <div class="flex gap-3" v-if="!selectedDistrict.length">
-          <button
+          <UButton
             @click.prevent="
               handleExport('csv', 'kecamatan', selectedCity[0].region_id)
             "
-            class="bg-green-300 p-2 rounded-md text-sm"
+            variant="solid"
+            color="primary"
           >
             Export to CSV
-          </button>
-          <button
+          </UButton>
+          <UButton
             @click.prevent="
               handleExport('pdf', 'kecamatan', selectedCity[0].region_id)
             "
-            class="bg-red-300 p-2 rounded-md text-sm"
+            variant="solid"
+            color="rose"
           >
             Export to PDF
-          </button>
+          </UButton>
         </div>
       </div>
       <UTable
@@ -299,22 +309,24 @@ const handleExport = async (to, level, parentId) => {
           clearable
         />
         <div class="flex gap-3" v-if="!selectedVillage.length">
-          <button
+          <UButton
             @click.prevent="
               handleExport('csv', 'kelurahan', selectedDistrict[0].region_id)
             "
-            class="bg-green-300 p-2 rounded-md text-sm"
+            variant="solid"
+            color="primary"
           >
             Export to CSV
-          </button>
-          <button
+          </UButton>
+          <UButton
             @click.prevent="
               handleExport('pdf', 'kelurahan', selectedDistrict[0].region_id)
             "
-            class="bg-red-300 p-2 rounded-md text-sm"
+            variant="solid"
+            color="rose"
           >
             Export to PDF
-          </button>
+          </UButton>
         </div>
       </div>
       <UTable
