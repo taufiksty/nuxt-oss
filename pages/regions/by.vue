@@ -163,10 +163,6 @@ const handleExport = async (to, level, parentId) => {
     "_blank"
   );
 };
-
-const colorMode = useColorMode();
-
-console.log(colorMode.preference);
 </script>
 
 <template>
@@ -188,6 +184,7 @@ console.log(colorMode.preference);
             variant="solid"
             color="primary"
             @click.prevent="handleExport('csv', 'provinsi')"
+            data-testid="export-province-csv"
           >
             Export to CSV
           </UButton>
@@ -195,6 +192,7 @@ console.log(colorMode.preference);
             variant="solid"
             color="rose"
             @click.prevent="handleExport('pdf', 'provinsi')"
+            data-testid="export-province-pdf"
           >
             Export to PDF
           </UButton>
@@ -209,6 +207,7 @@ console.log(colorMode.preference);
         :loading="loadingProvince"
         v-model="selectedProvince"
         :single-select="true"
+        data-testid="province-table"
       />
     </div>
 
@@ -252,6 +251,7 @@ console.log(colorMode.preference);
         :loading="loadingCity"
         v-model="selectedCity"
         :single-select="true"
+        data-testid="city-table"
       />
     </div>
 
@@ -295,6 +295,7 @@ console.log(colorMode.preference);
         :loading="loadingDistrict"
         v-model="selectedDistrict"
         :single-select="true"
+        data-testid="district-table"
       />
     </div>
 
@@ -338,11 +339,12 @@ console.log(colorMode.preference);
         :loading="loadingVillage"
         v-model="selectedVillage"
         :single-select="true"
+        data-testid="village-table"
       />
     </div>
 
     <div v-if="selectedVillage.length" class="mt-10">
-      <p>
+      <p data-testid="recap">
         Rekap lokasi usahamu: {{ selectedProvince[0].nama }},
         {{ selectedCity[0].nama }}, {{ selectedDistrict[0].nama }},
         {{ selectedVillage[0].nama }}
