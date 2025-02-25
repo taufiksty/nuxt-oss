@@ -24,4 +24,4 @@ logs
 !.env.example
 
 # Playwright
-playwright-report
+playwright-report/
