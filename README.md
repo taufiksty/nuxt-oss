@@ -8,6 +8,7 @@ Nuxt OSS adalah sebuah website yang menampilkan informasi tentang wilayah di Ind
 - **NuxtUI** - Library UI untuk yang di desain untuk Nuxt.js
 - **PostgreSQL** - Database yang digunakan untuk menyimpan data wilayah
 - **Docker** - Containerization untuk mempermudah deployment dan pengelolaan lingkungan
+- **Playwright** - End-to-end test menggunakan Playwright
 
 ## Cara Instalasi dan Menjalankan Proyek
 
