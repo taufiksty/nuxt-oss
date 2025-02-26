@@ -53,6 +53,7 @@ docker exec -it <postgres_container_name> bash
 ```bash
 psql -U postgres -d oss_rba_master
 ```
+Setelah itu masukkan password yang sesuai dengan `.env` sebelumnya.
 ##### b. Buat tabel m_region_temp:
 Tabel ini akan digunakan sebagai tempat sementara untuk mengimpor data CSV sebelum dipindahkan ke `m_region`.
 ```bash
