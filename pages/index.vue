@@ -17,6 +17,7 @@ useHead({
       <NuxtLink to="/regions/by" class="link"
         >Kunjungi halaman wilayah (berdasarkan) untuk menemukan ID wilayah usahamu.</NuxtLink
       ><//NuxtLink>
+      <NuxtLink to="/dashboard" class="link">Dashboard Sektor, Komoditas, dan Produk Jenis.</NuxtLink>
     </div>
   </div>
 </template>
