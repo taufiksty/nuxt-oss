@@ -28,27 +28,27 @@ export default defineEventHandler(async (event) => {
       [commodityId]
     );
 
-    result.rows[0].kbli = await Promise.all(
-      result.rows[0].kbli.map(async (kbli: string) => {
-        const response: any = await $fetch(
-          "https://api-stg.oss.go.id/stg/v1/izin/main/getBidangUsaha",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkX3Byb2ZpbGUiOjEyMTkzMDQ5OTUsInVzZXJuYW1lIjoidW5pY2hlbWNhbmRpNTQyNSIsImplbmlzX3BlbGFrdV91c2FoYSI6IlVtQUNQQT09IiwiZmxhZ191bWsiOiJVaDQ9Iiwicm9sZV91c2VyIjpbIlZXWUdPQT09Il0sImlkX29yZ2FuaXNhc2kiOm51bGx9LCJpYXQiOjE3NDEyMjc0OTAsImV4cCI6MTc0MTMxMzg5MCwiaXNzIjoib3NzX3JiYSJ9.ixoMVFE9Sr25iEt1SkYj_lXq6ScgrcEjJHtMrYz7t3k`,
-              user_key: "f9c53f291ab3b47251ef5b001b4f6dcc",
-            },
-            body: { main: { jenis_nib: "02", kbli } },
-          }
-        );
-        return `${kbli}${
-          response.data.map((bu: any) => bu.bidang_usaha) ==
-          "Bidang Usaha tidak termasuk bidang usaha yang diatur berdasarkan ketentuan Bidang Usaha Penanaman Modal (BUPM) sesuai dengan Peraturan Presiden Nomor 10 Tahun 2021 yang telah diubah dengan Peraturan Presiden Nomor 49 Tahun 2021"
-            ? ""
-            : " - " + response.data.map((bu: any) => bu.bidang_usaha).join("; ")
-        }`;
-      })
-    );
+    // result.rows[0].kbli = await Promise.all(
+    //   result.rows[0].kbli.map(async (kbli: string) => {
+    //     const response: any = await $fetch(
+    //       "https://api-stg.oss.go.id/stg/v1/izin/main/getBidangUsaha",
+    //       {
+    //         method: "POST",
+    //         headers: {
+    //           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkX3Byb2ZpbGUiOjEyMTkzMDQ5OTUsInVzZXJuYW1lIjoidW5pY2hlbWNhbmRpNTQyNSIsImplbmlzX3BlbGFrdV91c2FoYSI6IlVtQUNQQT09IiwiZmxhZ191bWsiOiJVaDQ9Iiwicm9sZV91c2VyIjpbIlZXWUdPQT09Il0sImlkX29yZ2FuaXNhc2kiOm51bGx9LCJpYXQiOjE3NDEyMjc0OTAsImV4cCI6MTc0MTMxMzg5MCwiaXNzIjoib3NzX3JiYSJ9.ixoMVFE9Sr25iEt1SkYj_lXq6ScgrcEjJHtMrYz7t3k`,
+    //           user_key: "f9c53f291ab3b47251ef5b001b4f6dcc",
+    //         },
+    //         body: { main: { jenis_nib: "02", kbli } },
+    //       }
+    //     );
+    //     return `${kbli}${
+    //       response.data.map((bu: any) => bu.bidang_usaha) ==
+    //       "Bidang Usaha tidak termasuk bidang usaha yang diatur berdasarkan ketentuan Bidang Usaha Penanaman Modal (BUPM) sesuai dengan Peraturan Presiden Nomor 10 Tahun 2021 yang telah diubah dengan Peraturan Presiden Nomor 49 Tahun 2021"
+    //         ? ""
+    //         : " - " + response.data.map((bu: any) => bu.bidang_usaha).join("; ")
+    //     }`;
+    //   })
+    // );
 
     return {
       data: result.rows[0],
