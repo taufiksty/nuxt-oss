@@ -54,7 +54,7 @@ const activePage = computed(() => {
         <span>{{ link.label }}</span>
       </NuxtLink>
     </aside>
-    <div class="flex-1 p-6">
+    <div class="flex-1 p-6 overflow-x-hidden">
       <slot />
     </div>
   </div>

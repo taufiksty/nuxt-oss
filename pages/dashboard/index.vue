@@ -20,7 +20,6 @@ const fetchTotal = async () => {
     totals.value[0].count = responseSectors.data.sektor_count || 0;
     totals.value[1].count = responseCommodities.data.komoditas_count || 0;
     totals.value[2].count = responseProductTypes.data.produk_jenis_count || 0;
-    console.log(totals);
   } catch (error) {
     console.error("Failed to fetch totals:", error.details);
   }
